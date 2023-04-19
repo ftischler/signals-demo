@@ -2,17 +2,27 @@
   <input
     type="text"
     placeholder="Search for a Pokémon..."
-    [(ngModel)]="searchTerm"
+    [ngModel]="searchTerm()"
+    (ngModelChange)="searchTerm.set($event)"
     name="searchTerm"
   />
   <button type="submit">Suchen</button>
 </form>
 
-<div *ngIf="pokemon">
-  <h2>{{ pokemon.name | titlecase }}</h2>
-  <img [src]="pokemon.sprites.front_default" alt="Pokemon image" />
-</div>
+<button (click)="incrementCounter1()">Increment counter 1</button>
+<button (click)="counter1.set(0)">Reset counter 1</button>
+<br />
+<button (click)="incrementCounter2()">Increment counter 2</button>
+<button (click)="counter2.set(0)">Reset counter 2</button>
+<p>Counter 1: {{ counter1() }}</p>
+<p>Counter 2: {{ counter2() }}</p>
+<p>Added: {{ added() }}</p>
 
-<pre>
-  {{ pokemon | json }}
-</pre>
+<ng-container *ngIf="pokemon() as pokemon">
+  <div>
+    <h2>{{ pokemon.name | titlecase }}</h2>
+    <img [src]="pokemon.sprites.front_default" alt="Pokemon image" />
+  </div>
+
+  <pre>{{ pokemon | json }}</pre>
+</ng-container>
