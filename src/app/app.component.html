@@ -1,1 +1,18 @@
-<router-outlet></router-outlet>
+<nav>
+  <ul>
+    <li>
+      <a routerLink="/pokemon-search" routerLinkActive="active"
+        >Pokémon Search</a
+      >
+    </li>
+    <li>
+      <a routerLink="/pokemon-game-search" routerLinkActive="active"
+        >Pokémon Game Search</a
+      >
+    </li>
+  </ul>
+</nav>
+
+<div class="router-outlet">
+  <router-outlet></router-outlet>
+</div>
