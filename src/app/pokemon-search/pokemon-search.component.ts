@@ -1,8 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
-  effect,
   inject,
   signal,
 } from '@angular/core';
@@ -11,41 +9,26 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { IPokemon } from 'pokeapi-typescript';
 import { firstValueFrom } from 'rxjs';
+import { RatingComponent } from '../rating/rating.component';
 
 @Component({
   selector: 'signals-pokemon-search',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RatingComponent],
   templateUrl: './pokemon-search.component.html',
   styleUrls: ['./pokemon-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PokemonSearchComponent {
-  searchTerm = signal<string>('');
-  pokemon = signal<IPokemon | undefined>(undefined);
-  counter1 = signal(0);
-  counter2 = signal(0);
-
-  added = computed(() => {
-    console.log('computed');
-    return this.counter1() + this.counter2();
-  });
-
   private httpClient = inject(HttpClient);
 
-  constructor() {
-    effect(async () => {
-      console.log('exec effect');
-      await this.find();
-    });
-  }
+  searchTerm = signal<string>('');
+  pokemon = signal<IPokemon | undefined>(undefined);
 
-  incrementCounter1(): void {
-    this.counter1.update((counter) => counter + 1);
-  }
+  ratings = signal<Record<string, boolean>>({});
 
-  incrementCounter2(): void {
-    this.counter2.update((counter) => counter + 1);
+  rate(name: string, like: boolean) {
+    this.ratings.mutate((ratings) => (ratings[name] = like));
   }
 
   async find() {
