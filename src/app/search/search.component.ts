@@ -5,13 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { IPokemon } from 'pokeapi-typescript';
 
 @Component({
-  selector: 'signals-pokemon-search',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './pokemon-search.component.html',
-  styleUrls: ['./pokemon-search.component.scss'],
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss'],
 })
-export class PokemonSearchComponent {
+export class SearchComponent {
   searchTerm: string;
   pokemon: IPokemon;
 

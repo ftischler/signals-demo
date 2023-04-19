@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'signals',
+  displayName: 'pokemon',
   preset: './jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: './coverage/signals',
+  coverageDirectory: './coverage/pokemon',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

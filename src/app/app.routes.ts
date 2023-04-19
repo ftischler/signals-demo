@@ -2,17 +2,15 @@ import { Route } from '@angular/router';
 
 export const appRoutes: Route[] = [
   {
-    path: 'pokemon-search',
+    path: 'search',
     loadComponent: () =>
-      import('./pokemon-search/pokemon-search.component').then(
-        (m) => m.PokemonSearchComponent
-      ),
+      import('./search/search.component').then((m) => m.SearchComponent),
   },
   {
-    path: 'pokemon-game-search',
+    path: 'game-search',
     loadComponent: () =>
-      import('./pokemon-game-search/pokemon-game-search.component').then(
-        (m) => m.PokemonGameSearchComponent
+      import('./game-search/game-search.component').then(
+        (m) => m.GameSearchComponent
       ),
   },
 ];
