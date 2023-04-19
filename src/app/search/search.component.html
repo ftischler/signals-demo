@@ -1,4 +1,4 @@
-<form class="search-form" (ngSubmit)="find()">
+<form class="search-form">
   <input
     type="text"
     placeholder="Search for a Pokémon..."
@@ -6,14 +6,21 @@
     (ngModelChange)="searchTerm.set($event)"
     name="searchTerm"
   />
-  <button type="submit" class="btn">Suchen</button>
 </form>
+
+<p>
+  Your are searching for {{ durationSeconds() }} seconds or
+  {{ durationMinutes() }} minutes and searched for
+  {{ amountSearched() }} pokémon
+</p>
+<pokemon-ratings [ratings]="ratings()" />
 
 <div *ngIf="pokemon() as pokemon">
   <h2>{{ pokemon.name | titlecase }}</h2>
   <img [src]="pokemon.sprites.front_default" alt="Pokemon image" />
+  <div>
+    <button class="btn" (click)="rate(pokemon.name, true)">Like</button>
+    <button class="btn" (click)="rate(pokemon.name, false)">Dislike</button>
+  </div>
+  <pre>{{ pokemon | json }}</pre>
 </div>
-
-<pre>
-  {{ pokemon | json }}
-</pre>
