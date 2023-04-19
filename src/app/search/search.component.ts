@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -10,18 +10,22 @@ import { IPokemon } from 'pokeapi-typescript';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent {
-  searchTerm: string;
-  pokemon: IPokemon;
+export class SearchComponent implements OnInit {
+  searchTerm = signal('');
+  pokemon = signal<IPokemon | undefined>(undefined);
 
   private httpClient = inject(HttpClient);
 
+  ngOnInit() {
+    effect(() => this.pokemon());
+  }
+
   find(): void {
-    const pokemonName = this.searchTerm.toLowerCase();
+    const pokemonName = this.searchTerm().toLowerCase();
     this.httpClient
       .get<IPokemon>(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
       .subscribe((pokemon) => {
-        this.pokemon = pokemon;
+        this.pokemon.set(pokemon);
         console.log(`Successfully resolved Pokémon ${pokemonName}`);
       });
   }
