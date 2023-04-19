@@ -18,7 +18,7 @@ export class PokemonSearchComponent {
 
   private httpClient = inject(HttpClient);
 
-  find() {
+  find(): void {
     const pokemonName = this.searchTerm.toLowerCase();
     this.httpClient
       .get<IPokemon>(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
