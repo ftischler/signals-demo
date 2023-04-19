@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { IPokemon } from 'pokeapi-typescript';
+import { catchError, Observable, of } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -12,17 +13,30 @@ import { IPokemon } from 'pokeapi-typescript';
 })
 export class SearchComponent {
   searchTerm: string;
-  pokemon: IPokemon;
+  pokemon?: IPokemon;
 
   private httpClient = inject(HttpClient);
 
   find(): void {
-    const pokemonName = this.searchTerm.toLowerCase();
-    this.httpClient
-      .get<IPokemon>(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-      .subscribe((pokemon) => {
-        this.pokemon = pokemon;
-        console.log(`Successfully resolved Pokémon ${pokemonName}`);
-      });
+    this.getPokemon(this.searchTerm).subscribe(
+      (pokemon) => (this.pokemon = pokemon)
+    );
+  }
+
+  getPokemon(searchTerm?: string): Observable<IPokemon | undefined> {
+    if (!searchTerm) {
+      return of(undefined);
+    }
+
+    return this.httpClient
+      .get<IPokemon>(
+        `https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`
+      )
+      .pipe(
+        catchError(() => {
+          console.error(`Error fetching data for ${searchTerm}`);
+          return of(undefined);
+        })
+      );
   }
 }
