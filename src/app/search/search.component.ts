@@ -2,10 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   inject,
-  Injector,
-  runInInjectionContext,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -37,7 +34,6 @@ import {
 })
 export class SearchComponent {
   private httpClient = inject(HttpClient);
-  private injector = inject(Injector);
 
   searchTerm = signal('');
 
@@ -52,9 +48,7 @@ export class SearchComponent {
   searchTerm$ = toObservable(this.searchTerm);
 
   constructor() {
-    effect(() =>
-      runInInjectionContext(this.injector, () => this.findDebounced())
-    );
+    this.findDebounced();
   }
 
   rate(name: string, like: boolean): void {
