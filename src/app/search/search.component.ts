@@ -40,10 +40,13 @@ export class SearchComponent {
   private injector = inject(Injector);
 
   searchTerm = signal('');
+
   pokemon = signal<IPokemon | undefined>(undefined);
   ratings = signal<Record<string, boolean>>({});
+
   durationSeconds = toSignal(timer(0, 1000), { initialValue: 0 });
   durationMinutes = computed(() => (this.durationSeconds() / 60).toFixed(2));
+
   amountSearched = signal(0);
 
   searchTerm$ = toObservable(this.searchTerm);
