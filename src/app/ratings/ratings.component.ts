@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -7,5 +7,8 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './ratings.component.html',
   styleUrls: ['./ratings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RatingsComponent {}
+export class RatingsComponent {
+  @Input() ratings: Record<string, boolean>;
+}
