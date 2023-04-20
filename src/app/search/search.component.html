@@ -11,8 +11,6 @@
 <div *ngIf="pokemon">
   <h2>{{ pokemon.name | titlecase }}</h2>
   <img [src]="pokemon.sprites.front_default" alt="Pokemon image" />
-</div>
 
-<pre>
-  {{ pokemon | json }}
-</pre>
+  <pre>{{ pokemon | json }}</pre>
+</div>
